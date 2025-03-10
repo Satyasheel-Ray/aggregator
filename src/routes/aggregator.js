@@ -10,32 +10,75 @@ const upload = require('multer')({ dest: '/tmp/uploads' });
 const folderUpload = upload.array('repoFolder');
 
 // GET / - Render upload forms
-router.get('/', (req, res) => {
-  res.send(`
-    <html>
-      <head>
-        <title>Upload Codebase</title>
-        <style>
-          /* Your CSS styles */
-        </style>
-      </head>
-      <body>
-        <h1>Upload Your Codebase</h1>
-        <form action="/upload" method="post" enctype="multipart/form-data">
-          <h2>Upload a ZIP file</h2>
-          <input type="file" name="repoZip" accept=".zip" required />
-          <button type="submit">Upload ZIP</button>
-        </form>
-        <form action="/upload-folder" method="post" enctype="multipart/form-data">
-          <h2>Upload a Code Folder</h2>
-          <input type="file" name="repoFolder" webkitdirectory directory multiple required />
-          <button type="submit">Upload Folder</button>
-        </form>
-      </body>
-    </html>
-  `);
-});
 
+router.get('/', (req, res) => {
+    res.send(`
+      <html>
+        <head>
+          <title>Upload Codebase</title>
+          <style>
+            body {
+              font-family: sans-serif;
+              background-color: #121212;
+              color: #e0e0e0;
+              margin: 0;
+              padding: 0;
+            }
+            .container {
+              max-width: 600px;
+              margin: 40px auto;
+              background-color: #1e1e1e;
+              border: 2px solid #333;
+              border-radius: 5px;
+              padding: 20px;
+            }
+            h1, h2 {
+              text-align: center;
+              margin-bottom: 20px;
+            }
+            form {
+              margin-bottom: 30px;
+              text-align: center;
+            }
+            label {
+              display: block;
+              margin: 10px 0;
+            }
+            input, button {
+              background-color: #2c2c2c;
+              border: 1px solid #333;
+              color: #e0e0e0;
+              border-radius: 3px;
+              padding: 10px;
+              margin-top: 10px;
+              cursor: pointer;
+            }
+          </style>
+        </head>
+        <body>
+          <div class="container">
+            <h1>Upload Your Codebase</h1>
+            
+            <h2>Upload a ZIP file</h2>
+            <form action="/upload" method="post" enctype="multipart/form-data">
+              <label>Select Zip File:</label>
+              <input type="file" name="repoZip" accept=".zip" required />
+              <br/>
+              <button type="submit">Upload ZIP</button>
+            </form>
+            
+            <h2>Upload a Code Folder</h2>
+            <form action="/upload-folder" method="post" enctype="multipart/form-data">
+              <label>Select Folder:</label>
+              <input type="file" name="repoFolder" webkitdirectory directory multiple required />
+              <br/>
+              <button type="submit">Upload Folder</button>
+            </form>
+          </div>
+        </body>
+      </html>
+    `);
+  });
 // POST /upload - Handle ZIP file upload
 router.post('/upload', upload.single('repoZip'), async (req, res) => {
   try {
