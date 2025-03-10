@@ -1,0 +1,4 @@
+PORT=1298
+MONGO_DB_URI=mongodb+srv://satyasheelray:satyasheel123@cluster0.3c5hd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+JWT_SECRET=satyasheel123
+NODE_ENV=development
